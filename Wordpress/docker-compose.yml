@@ -44,7 +44,7 @@ services:
       options:
         max-size: "4m"
 
-  wordpress_adminer:
+  wordpress__adminer:
     image: adminer
     restart: always
     container_name: wordpress__adminer
