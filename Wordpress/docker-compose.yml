@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: unless-stopped
+    container_name: wordpress
+    depends_on:
+      - wordpress__db
+    ports:
+      - 7080:80
+    networks:
+      - wordpress
+    environment:
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=ohkoow4L
+      - WORDPRESS_DB_HOST=wordpress__db
+      - WORDPRESS_DB_NAME=wordpress
+      - WORDPRESS_TABLE_PREFIX=wp_
+      - WORDPRESS_DEBUG=true
+    volumes:
+      - ./html:/var/www/html
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "4m"
+
+  wordpress__db:
+    image: mariadb
+    restart: unless-stopped
+    container_name: wordpress__db
+    networks:
+      - wordpress
+    environment:
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=ohkoow4L
+      - MYSQL_DATABASE=wordpress
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true
+    volumes:
+      - ./database:/var/lib/mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "4m"
+
+  wordpress_adminer:
+    image: adminer
+    restart: always
+    container_name: wordpress__adminer
+    networks:
+      - wordpress
+    ports:
+      - 7081:8080
+
+networks:
+  wordpress:

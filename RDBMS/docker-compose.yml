@@ -1,0 +1,113 @@
+# ------------------------------------------------------------
+# docker-compose.yml for some RDBMS Servers.
+#
+# * MariaDB     localhost:3306 (Hostname "mariadb")
+# * MySQL       localhost:3316 and localhost:33160 (Hostname "mysql")
+# * Postgres    localhost:5432 (Hostname "postgres")
+# * Adminer     http://localhost:8080 (Web-Frontend)
+# ------------------------------------------------------------
+
+version: "3.1"
+
+services:
+
+  mariadb:
+    # https://hub.docker.com/_/mariadb
+    image: mariadb:latest
+    container_name: mariadb
+    restart: no
+    environment:
+      # Change this!
+      - MARIADB_ROOT_PASSWORD=mariadb-root-password
+    networks:
+      - rdms
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-etc:/etc
+      - mariadb-data:/var/lib/mysql
+
+  mysql:
+    # https://hub.docker.com/_/mysql
+    image: mysql:latest
+    container_name: mysql
+    restart: no
+    environment:
+      # Change this!
+      - MYSQL_ROOT_PASSWORD=mysql-root-password
+    networks:
+      - rdms
+    ports:
+      - "3316:3306"
+      - "33160:33060"
+    volumes:
+      - mysql-etc:/etc
+      - mysql-data:/var/lib/mysql
+
+  postgres:
+    # See: https://hub.docker.com/_/postgres
+    image: postgres:latest
+    container_name: postgres
+    restart: no
+    environment:
+      # Change this!
+      - POSTGRES_PASSWORD=postgres-root-password
+    networks:
+      - rdms
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-etc:/etc
+      - postgres-data:/var/lib/postgresql/data
+
+  adminer:
+    # https://hub.docker.com/_/adminer/
+    image: adminer:latest
+    container_name: adminer
+    restart: no
+    environment:
+      - ADMINER_DESIGN=dracula
+    networks:
+      - rdms
+    ports:
+      - 8080:8080
+
+  pgadmin:
+    # See: https://hub.docker.com/r/dpage/pgadmin4
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@noreply.com
+      - PGADMIN_DEFAULT_PASSWORD=s3cret
+    networks:
+      - rdms
+    ports:
+      - "9080:80"
+      - "9443:443"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  phpmyadmin:
+    # See: https://hub.docker.com/_/phpmyadmin
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - rdms
+    ports:
+      - "8081:80"
+
+networks:
+  rdms:
+
+volumes:
+  mariadb-etc:
+  mariadb-data:
+  mysql-etc:
+  mysql-data:
+  postgres-etc:
+  postgres-data:
+  pgadmin-data:
