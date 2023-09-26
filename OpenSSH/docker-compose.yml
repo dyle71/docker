@@ -23,5 +23,6 @@ services:
       - USER_PASSWORD=s3cret
     volumes:
       - ./config:/config
+      - ./post-install:/custom-cont-init.d:ro
     ports:
       - 2222:2222
