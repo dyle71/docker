@@ -13,7 +13,7 @@ services:
     # https://hub.docker.com/_/mariadb
     image: mariadb:latest
     container_name: mariadb
-    restart: no
+    restart: unless-stopped
     environment:
       # Change this!
       - MARIADB_ROOT_PASSWORD=mariadb-root-password
@@ -30,7 +30,7 @@ services:
     # https://hub.docker.com/_/mysql
     image: mysql:latest
     container_name: mysql
-    restart: no
+    restart: unless-stopped
     environment:
       # Change this!
       - MYSQL_ROOT_PASSWORD=mysql-root-password
@@ -48,7 +48,7 @@ services:
     # See: https://hub.docker.com/_/postgres
     image: postgres:latest
     container_name: postgres
-    restart: no
+    restart: unless-stopped
     environment:
       # Change this!
       - POSTGRES_PASSWORD=postgres-root-password
@@ -65,7 +65,7 @@ services:
     # https://hub.docker.com/_/adminer/
     image: adminer:latest
     container_name: adminer
-    restart: no
+    restart: unless-stopped
     environment:
       - ADMINER_DESIGN=dracula
     networks:
