@@ -24,7 +24,6 @@ services:
     volumes:
       - mariadb-etc:/etc
       - mariadb-data:/var/lib/mysql
-      - ${PWD}/share:/mnt
 
   mysql:
     # https://hub.docker.com/_/mysql
@@ -42,7 +41,6 @@ services:
     volumes:
       - mysql-etc:/etc
       - mysql-data:/var/lib/mysql
-      - ${PWD}/share:/mnt
 
   postgres:
     # See: https://hub.docker.com/_/postgres
@@ -59,7 +57,6 @@ services:
     volumes:
       - postgres-etc:/etc
       - postgres-data:/var/lib/postgresql/data
-      - ${PWD}/share:/mnt
 
   adminer:
     # https://hub.docker.com/_/adminer/
