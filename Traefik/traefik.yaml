@@ -6,13 +6,15 @@ entrypoints:
     address: ":80"
     http:
       redirections:
-        entrypoint:
-          to: websecure
+        entryPoint:
+          to: https
+          scheme: https
+          permanent: true
   websecure:
     address: ":443"
 
 log:
-  level: ERROR
+  level: TRACE
 
 metrics:
   addInternals: true

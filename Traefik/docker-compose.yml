@@ -1,7 +1,9 @@
 services:
 
   traefik:
-    image: traefik:v3.1
+    image: traefik:latest
+    container_name: traefik
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -10,25 +12,22 @@ services:
       - ./traefik.yaml:/etc/traefik/traefik.yaml
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      - "traefik.enable=true"   
-      - "traefik.http.routers.dashboard.rule=Host(`localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.localhost`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.tls=true"
       - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.usersfile=/htpasswd"
-      - "traefik.http.middlewares.auth.basicauth.realm=Local Traefik"
     networks:
       - traefik
 
   whoami:
     image: traefik/whoami
     labels:
-      - "traefik.http.routers.whoami.rule=Host(`localhost`) && PathPrefix(`/whoami`)"
-      - "traefik.http.routers.whoami.tls=true"
+      - "traefik.http.routers.whoami1.rule=Host(`localhost`) && PathPrefix(`/whoami`)"
+      - "traefik.http.routers.whoami1.tls=true"
     networks:
       - traefik
 
 networks:
   traefik:
     external: true
-

@@ -10,7 +10,6 @@
 services:
 
   mariadb:
-    # https://hub.docker.com/_/mariadb
     image: mariadb:latest
     container_name: mariadb
     restart: unless-stopped
@@ -26,7 +25,6 @@ services:
       - mariadb-data:/var/lib/mysql
 
   mysql:
-    # https://hub.docker.com/_/mysql
     image: mysql:latest
     container_name: mysql
     restart: unless-stopped
@@ -43,7 +41,6 @@ services:
       - mysql-data:/var/lib/mysql
 
   postgres:
-    # See: https://hub.docker.com/_/postgres
     image: postgres:latest
     container_name: postgres
     restart: unless-stopped
@@ -59,7 +56,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   adminer:
-    # https://hub.docker.com/_/adminer/
     image: adminer:latest
     container_name: adminer
     restart: unless-stopped
