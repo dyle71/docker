@@ -46,6 +46,7 @@ services:
     restart: unless-stopped
     environment:
       # Change this!
+      - POSTGRES_USER=pgadmin
       - POSTGRES_PASSWORD=postgres-root-password
     networks:
       - rdms
