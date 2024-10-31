@@ -84,8 +84,8 @@ services:
       - pgadmin-data:/var/lib/pgadmin
 
   phpmyadmin:
-    # See: https://hub.docker.com/_/phpmyadmin
-    image: phpmyadmin
+    build:
+      context: ./phpmyadmin
     container_name: phpmyadmin
     restart: unless-stopped
     environment:
